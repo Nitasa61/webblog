@@ -31,7 +31,7 @@
         .blog-card { background: var(--white); border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 2rem; display: flex; flex-direction: column; transition: transform 0.3s; }
         .blog-card:hover { transform: translateY(-5px); }
         
-        /* === FIX GAMBAR (Landscape Full, Portrait Crop Atas) === */
+        /* === LOGIKA CSS GAMBAR (SMART CROP) === */
         .blog-img-container {
             width: 100%;
             background-color: #eee;
@@ -48,10 +48,10 @@
             object-fit: contain; 
         }
 
-        /* Kelas khusus yang ditambahkan JS jika gambar Portrait */
+        /* Class ini ditambahkan via JS jika gambar Portrait */
         .is-portrait {
-            height: 280px !important; /* Paksa tinggi tetap */
-            object-fit: cover !important; /* Crop sisa gambar */
+            height: 280px !important;       /* Paksa tinggi tetap */
+            object-fit: cover !important;   /* Crop sisa gambar */
             object-position: top center !important; /* FOKUS ATAS (KEPALA) */
         }
 
@@ -91,7 +91,7 @@
             <a href="index.html" class="logo">
                 <img src="logo.png" alt="Logo"> F.A HydroFarm <span>Blog</span>
             </a>
-            <a href="https://sayurhidroponik.store" class="btn-store">Ke Toko Online</a>
+            <a href="https://sayur.pages.dev/" class="btn-store">Ke Toko Online</a>
         </nav>
     </header>
 
