@@ -19,21 +19,8 @@
         .date { color: #888; font-size: 0.9rem; margin-top: 10px; display: block; }
         h1 { font-size: 2.5rem; margin: 15px 0; line-height: 1.3; overflow-wrap: break-word; }
 
-        /* --- FIX GAMBAR HEADER ARTIKEL --- */
-        .article-img { 
-            width: 100%; 
-            height: auto; /* Landscape: Tinggi otomatis agar full */
-            border-radius: 10px; 
-            margin-bottom: 2rem; 
-            display: block; 
-        }
-        /* Jika Portrait, batasi tinggi dan fokus ke atas */
-        .is-portrait-header { 
-            max-height: 500px; 
-            object-fit: cover; 
-            object-position: top center !important; /* KUNCI AGAR KEPALA TIDAK KEPOTONG */
-            width: 100%; 
-        }
+        .article-img { width: 100%; height: auto; border-radius: 10px; margin-bottom: 2rem; display: block; }
+        .is-portrait-header { max-height: 500px; object-fit: cover; object-position: top center !important; width: 100%; }
         
         .article-content { line-height: 1.8; font-size: 1.1rem; color: #444; overflow-wrap: break-word; width: 100%; }
         .article-content ul, .article-content ol { margin-left: 20px; margin-bottom: 15px; }
@@ -70,9 +57,7 @@
 
     <script>
         function checkHeaderOrientation(img) {
-            if (img.naturalHeight > img.naturalWidth) {
-                img.classList.add('is-portrait-header');
-            }
+            if (img.naturalHeight > img.naturalWidth) img.classList.add('is-portrait-header');
         }
     </script>
 
@@ -113,8 +98,8 @@
                     if(data.gambar) { imgEl.src = data.gambar; imgEl.alt = data.judul; } 
                     else { imgEl.style.display = 'none'; }
 
-                    // Render HTML untuk isi artikel
-                    document.getElementById('artBody').innerHTML = data.isi || "";
+                    // MENAMPILKAN ISI ARTIKEL HTML (PENTING!)
+                    document.getElementById('artBody').innerHTML = data.isi || "<p>Konten kosong atau sedang diperbaiki.</p>";
 
                     document.getElementById('loading').style.display = 'none';
                     document.getElementById('content').style.display = 'block';
