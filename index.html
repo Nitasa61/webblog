@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>F.A HydroFarm Blog</title>
+    <title>F.A HydroFarm Blog - Edukasi Hidroponik</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root { --primary-color: #2ecc71; --secondary-color: #27ae60; --text-dark: #333; --text-light: #666; --bg-light: #f9fbf9; --white: #ffffff; --accent-color: #f1c40f; }
@@ -19,7 +19,15 @@
 
         .hero { 
             background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'); 
-            background-size: cover; background-position: center; height: 450px; display: flex; align-items: center; justify-content: center; text-align: center; color: var(--white); padding: 0 1rem; 
+            background-size: cover; 
+            background-position: center; 
+            height: 450px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            text-align: center; 
+            color: var(--white); 
+            padding: 0 1rem; 
         }
         .hero-content h1 { font-size: 3rem; margin-bottom: 1rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
         .hero-content p { font-size: 1.2rem; max-width: 700px; margin: 0 auto; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
@@ -31,10 +39,13 @@
         .blog-card { background: var(--white); border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 2rem; display: flex; flex-direction: column; transition: transform 0.3s; }
         .blog-card:hover { transform: translateY(-5px); }
         
-        .blog-img-container { width: 100%; background-color: #eee; overflow: hidden; position: relative; }
-        .blog-img-tag { width: 100%; display: block; transition: 0.3s; height: auto; object-fit: contain; }
-        .is-portrait { height: 280px !important; object-fit: cover !important; object-position: top center !important; }
-
+        .blog-img { 
+            height: 250px; 
+            background-size: cover; 
+            background-position: top center; 
+            background-color: #ddd; 
+        }
+        
         .blog-info { padding: 1.5rem; }
         .blog-meta { font-size: 0.85rem; color: var(--primary-color); margin-bottom: 0.5rem; font-weight: 600; text-transform: uppercase; }
         .blog-title { font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-dark); word-wrap: break-word; }
@@ -46,14 +57,21 @@
         }
 
         .read-more { text-decoration: none; color: var(--secondary-color); font-weight: 700; display: inline-flex; align-items: center; gap: 5px; cursor: pointer; }
+        
         .sidebar-widget { background: var(--white); padding: 1.5rem; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 2rem; }
         .widget-title { font-size: 1.2rem; margin-bottom: 1rem; border-bottom: 2px solid #eee; padding-bottom: 0.5rem; }
+        
         .category-list { list-style: none; } 
         .category-list li { margin-bottom: 0.8rem; border-bottom: 1px dotted #eee; padding-bottom: 5px; } 
-        .category-list a { text-decoration: none; color: var(--text-light); display: flex; justify-content: space-between; font-weight: 500; cursor: pointer; }
+        
+        .category-list a { 
+            text-decoration: none; color: var(--text-light); display: flex; justify-content: space-between; font-weight: 500; cursor: pointer; 
+        }
         .category-list a:hover, .category-list a.active-cat { color: var(--primary-color); font-weight: 700; }
+
         .notification-box { background-color: #e8f8f5; border-left: 4px solid var(--primary-color); padding: 1rem; font-size: 0.9rem; color: var(--text-dark); margin-bottom: 10px; border-radius: 0 5px 5px 0;}
         .notification-box.promo { background-color: #fcf3cf; border-color: var(--accent-color); }
+        
         .empty-state { text-align: center; padding: 40px; background: white; border-radius: 10px; color: #777; }
         
         footer { background-color: var(--text-dark); color: var(--white); padding: 3rem 2rem; text-align: center; }
@@ -71,7 +89,7 @@
             <a href="index.html" class="logo">
                 <img src="logo.png" alt="Logo"> F.A HydroFarm <span>Blog</span>
             </a>
-            <a href="https://sayur.pages.dev/" class="btn-store">Ke Toko Online</a>
+            <a href="https://sayurhidroponik.store" class="btn-store">Ke Toko Online</a>
         </nav>
     </header>
 
@@ -83,10 +101,12 @@
     </section>
 
     <main class="container">
+        
         <section class="blog-grid" id="blogContainer">
             <h2 class="section-title" id="pageTitle">Artikel Terbaru</h2>
             <div style="text-align: center; color: #888;">Sedang memuat artikel...</div>
         </section>
+
         <aside>
             <div class="sidebar-widget">
                 <h3 class="widget-title">📢 Pemberitahuan</h3>
@@ -94,6 +114,7 @@
                     <p style="font-size: 0.8rem; color: #888;">Memuat info...</p>
                 </div>
             </div>
+
             <div class="sidebar-widget">
                 <h3 class="widget-title">Kategori</h3>
                 <ul class="category-list">
@@ -106,6 +127,7 @@
                 </ul>
             </div>
         </aside>
+
     </main>
 
     <footer>
@@ -127,13 +149,6 @@
         </div>
     </footer>
 
-    <script>
-        function checkImageOrientation(img) {
-            if (img.naturalHeight > img.naturalWidth) img.classList.add('is-portrait');
-            else img.classList.remove('is-portrait');
-        }
-    </script>
-
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore, collection, getDocs, orderBy, query, where } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
@@ -153,37 +168,42 @@
 
         window.loadArticles = async (filter = 'Semua') => {
             const container = document.getElementById('blogContainer');
-            container.innerHTML = `<h2 class="section-title">${filter === 'Semua' ? 'Artikel Terbaru' : 'Kategori: ' + filter}</h2><div style="text-align: center; padding: 20px;">⏳ Sedang mengambil data...</div>`;
+            const pageTitle = document.getElementById('pageTitle');
+            
+            container.innerHTML = `<h2 class="section-title">${filter === 'Semua' ? 'Artikel Terbaru' : 'Kategori: ' + filter}</h2>
+                                   <div style="text-align: center; padding: 20px;">⏳ Sedang mengambil data...</div>`;
 
             try {
-                let q = (filter === 'Semua') 
-                    ? query(collection(db, "articles"), orderBy("createdAt", "desc"))
-                    : query(collection(db, "articles"), where("kategori", "==", filter));
+                let q;
+                if (filter === 'Semua') {
+                    q = query(collection(db, "articles"), orderBy("createdAt", "desc"));
+                } else {
+                    q = query(collection(db, "articles"), where("kategori", "==", filter));
+                }
 
                 const querySnapshot = await getDocs(q);
 
                 if (querySnapshot.empty) {
-                    container.innerHTML = `<h2 class="section-title">${filter === 'Semua' ? 'Artikel Terbaru' : 'Kategori: ' + filter}</h2><div class="empty-state"><h3>Belum ada artikel</h3></div>`;
+                    container.innerHTML = `
+                        <h2 class="section-title">${filter === 'Semua' ? 'Artikel Terbaru' : 'Kategori: ' + filter}</h2>
+                        <div class="empty-state">
+                            <h3>Belum ada artikel</h3>
+                            <p>Tidak ditemukan artikel untuk kategori <strong>"${filter}"</strong> saat ini.</p>
+                        </div>
+                    `;
                     return;
                 }
 
                 let articlesHtml = '';
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
-                    // BERSIHKAN KODE HTML DARI CUPLIKAN DEPAN
-                    const rawContent = data.isi || "";
-                    const plainText = rawContent.replace(/<[^>]*>?/gm, ' '); // Ganti tag HTML dgn spasi
-                    const excerpt = plainText.length > 0 ? plainText.substring(0, 150) + (plainText.length > 150 ? "..." : "") : "Klik Baca Selengkapnya untuk melihat isi artikel.";
-
                     articlesHtml += `
                         <article class="blog-card">
-                            <div class="blog-img-container">
-                                <img src="${data.gambar}" class="blog-img-tag" onload="checkImageOrientation(this)">
-                            </div>
+                            <div class="blog-img" style="background-image: url('${data.gambar}');"></div>
                             <div class="blog-info">
                                 <div class="blog-meta">${data.kategori} • ${data.tanggal}</div>
                                 <h3 class="blog-title">${data.judul}</h3>
-                                <p class="blog-excerpt">${excerpt}</p>
+                                <p class="blog-excerpt">${data.isi}</p>
                                 <a href="article.html?id=${doc.id}" class="read-more">Baca Selengkapnya &rarr;</a>
                             </div>
                         </article>
@@ -193,7 +213,10 @@
                 const displayTitle = filter === 'Semua' ? 'Artikel Terbaru' : 'Kategori: ' + filter;
                 container.innerHTML = `<h2 class="section-title">${displayTitle}</h2>` + articlesHtml;
 
-            } catch (error) { console.error(error); }
+            } catch (error) {
+                console.error("Error loading articles:", error);
+                container.innerHTML = `<p style="color:red; text-align:center;">Gagal memuat data: ${error.message}</p>`;
+            }
         }
 
         window.filterKategori = function(kategori, element) {
@@ -208,18 +231,22 @@
                 const q = query(collection(db, "notifications"), orderBy("createdAt", "desc"));
                 const querySnapshot = await getDocs(q);
                 container.innerHTML = ''; 
-                if (querySnapshot.empty) { container.innerHTML = '<p style="font-size:0.9rem; color:#999;">Tidak ada info baru.</p>'; return; }
+                if (querySnapshot.empty) {
+                    container.innerHTML = '<p style="font-size:0.9rem; color:#999;">Tidak ada info baru.</p>';
+                    return;
+                }
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
                     const typeClass = data.type === 'promo' ? 'promo' : '';
                     const content = data.content ? data.content.replace(/\n/g, '<br>') : '';
                     container.innerHTML += `<div class="notification-box ${typeClass}">${content}</div>`;
                 });
-            } catch (e) { }
+            } catch (e) { console.log("Error notif:", e); }
         }
 
         window.loadArticles('Semua');
         loadNotifications();
     </script>
+
 </body>
 </html>
