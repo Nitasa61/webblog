@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>F.A HydroFarm Blog - Edukasi Hidroponik</title>
+    <title>F.A HydroFarm Blog</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root { --primary-color: #2ecc71; --secondary-color: #27ae60; --text-dark: #333; --text-light: #666; --bg-light: #f9fbf9; --white: #ffffff; --accent-color: #f1c40f; }
@@ -31,29 +31,9 @@
         .blog-card { background: var(--white); border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 2rem; display: flex; flex-direction: column; transition: transform 0.3s; }
         .blog-card:hover { transform: translateY(-5px); }
         
-        /* === LOGIKA CSS GAMBAR (SMART CROP) === */
-        .blog-img-container {
-            width: 100%;
-            background-color: #eee;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .blog-img-tag { 
-            width: 100%;
-            display: block;
-            transition: 0.3s;
-            /* Default: Landscape tampil full (tinggi menyesuaikan) */
-            height: auto; 
-            object-fit: contain; 
-        }
-
-        /* Class ini ditambahkan via JS jika gambar Portrait */
-        .is-portrait {
-            height: 280px !important;       /* Paksa tinggi tetap */
-            object-fit: cover !important;   /* Crop sisa gambar */
-            object-position: top center !important; /* FOKUS ATAS (KEPALA) */
-        }
+        .blog-img-container { width: 100%; background-color: #eee; overflow: hidden; position: relative; }
+        .blog-img-tag { width: 100%; display: block; transition: 0.3s; height: auto; object-fit: contain; }
+        .is-portrait { height: 280px !important; object-fit: cover !important; object-position: top center !important; }
 
         .blog-info { padding: 1.5rem; }
         .blog-meta { font-size: 0.85rem; color: var(--primary-color); margin-bottom: 0.5rem; font-weight: 600; text-transform: uppercase; }
@@ -149,12 +129,8 @@
 
     <script>
         function checkImageOrientation(img) {
-            // Jika tinggi > lebar (Portrait), tambahkan class 'is-portrait'
-            if (img.naturalHeight > img.naturalWidth) {
-                img.classList.add('is-portrait');
-            } else {
-                img.classList.remove('is-portrait');
-            }
+            if (img.naturalHeight > img.naturalWidth) img.classList.add('is-portrait');
+            else img.classList.remove('is-portrait');
         }
     </script>
 
@@ -194,12 +170,10 @@
                 let articlesHtml = '';
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
-                    
-                    // --- FIX BUG HTML TAGS MUNCUL DI CUPLIKAN ---
-                    // Kita bersihkan semua tag HTML (<p>, <br>, <img>) dari teks cuplikan
+                    // BERSIHKAN KODE HTML DARI CUPLIKAN DEPAN
                     const rawContent = data.isi || "";
-                    const plainText = rawContent.replace(/<[^>]*>?/gm, ''); // Hapus semua tag HTML
-                    const excerpt = plainText.substring(0, 150) + (plainText.length > 150 ? "..." : "");
+                    const plainText = rawContent.replace(/<[^>]*>?/gm, ' '); // Ganti tag HTML dgn spasi
+                    const excerpt = plainText.length > 0 ? plainText.substring(0, 150) + (plainText.length > 150 ? "..." : "") : "Klik Baca Selengkapnya untuk melihat isi artikel.";
 
                     articlesHtml += `
                         <article class="blog-card">
