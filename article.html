@@ -18,30 +18,33 @@
         .article-header { margin-bottom: 2rem; text-align: center; }
         .badge { background: var(--primary-color); color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; text-transform: uppercase; }
         .date { color: #888; font-size: 0.9rem; margin-top: 10px; display: block; }
+        
         h1 { font-size: 2.5rem; margin: 15px 0; line-height: 1.3; overflow-wrap: break-word; }
 
-        /* === PERBAIKAN CSS GAMBAR DI SINI === */
-        /* 1. Style Dasar: Landscape full (tinggi otomatis) */
+        /* CSS Gambar Smart Crop */
         .article-img { 
             width: 100%; 
-            height: auto; /* Biarkan tinggi menyesuaikan agar landscape tidak gepeng/terpotong */
+            height: auto; 
             border-radius: 10px; 
             margin-bottom: 2rem;
             display: block;
         }
-
-        /* 2. Style Khusus Portrait: Batasi tinggi agar tidak terlalu panjang ke bawah, lalu crop atas */
         .force-portrait-crop-single {
-            max-height: 500px; /* Batas tinggi maksimal untuk portrait di halaman baca */
-            object-fit: cover;
-            object-position: top center; /* Fokus crop di atas */
+            max-height: 500px; 
+            object-fit: cover; 
+            object-position: top center; 
             width: 100%;
         }
-        /* ===================================== */
         
+        /* CSS AGAR TULISAN RAPI (RATA KANAN-KIRI) */
         .article-content { 
-            line-height: 1.8; font-size: 1.1rem; color: #444; 
-            white-space: pre-wrap; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; width: 100%;
+            line-height: 1.8; 
+            font-size: 1.1rem; 
+            color: #444; 
+            white-space: pre-wrap; 
+            overflow-wrap: break-word; 
+            width: 100%;
+            text-align: justify; /* <-- INI YANG MEMBUAT RAPI */
         }
 
         .btn-home-phys {
@@ -99,9 +102,7 @@
 
     <script>
         function adjustSingleImage(imgElement) {
-            // Jika portrait (tinggi > lebar)
             if (imgElement.naturalHeight > imgElement.naturalWidth) {
-                // Tambahkan kelas untuk membatasi tinggi dan crop atas
                 imgElement.classList.add('force-portrait-crop-single');
             }
         }
@@ -143,11 +144,12 @@
                 document.getElementById('artDate').innerText = data.tanggal;
                 document.getElementById('artTitle').innerText = data.judul;
                 
-                // Set src gambar (ini akan memicu event onload di atas)
                 const imgEl = document.getElementById('artImage');
                 imgEl.src = data.gambar;
                 imgEl.alt = data.judul;
 
+                // Menggunakan innerText karena Admin menggunakan Textarea biasa (Plain Text)
+                // white-space: pre-wrap di CSS akan menjaga enter/paragraf tetap ada
                 document.getElementById('artBody').innerText = data.isi;
 
                 document.getElementById('loading').style.display = 'none';
