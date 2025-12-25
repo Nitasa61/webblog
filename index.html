@@ -39,13 +39,10 @@
         .blog-card { background: var(--white); border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 2rem; display: flex; flex-direction: column; transition: transform 0.3s; }
         .blog-card:hover { transform: translateY(-5px); }
         
-        .blog-img { 
-            height: 250px; 
-            background-size: cover; 
-            background-position: top center; 
-            background-color: #ddd; 
-        }
-        
+        .blog-img-container { width: 100%; background-color: #eee; overflow: hidden; position: relative; }
+        .blog-img-tag { width: 100%; display: block; transition: 0.3s; height: auto; object-fit: contain; }
+        .is-portrait { height: 280px !important; object-fit: cover !important; object-position: top center !important; }
+
         .blog-info { padding: 1.5rem; }
         .blog-meta { font-size: 0.85rem; color: var(--primary-color); margin-bottom: 0.5rem; font-weight: 600; text-transform: uppercase; }
         .blog-title { font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-dark); word-wrap: break-word; }
@@ -89,7 +86,7 @@
             <a href="index.html" class="logo">
                 <img src="logo.png" alt="Logo"> F.A HydroFarm <span>Blog</span>
             </a>
-            <a href="https://sayur.pages.dev" class="btn-store">Ke Toko Online</a>
+            <a href="https://sayur.pages.dev/" class="btn-store">Ke Toko Online</a>
         </nav>
     </header>
 
@@ -149,6 +146,13 @@
         </div>
     </footer>
 
+    <script>
+        function checkImageOrientation(img) {
+            if (img.naturalHeight > img.naturalWidth) img.classList.add('is-portrait');
+            else img.classList.remove('is-portrait');
+        }
+    </script>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore, collection, getDocs, orderBy, query, where } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
@@ -197,13 +201,22 @@
                 let articlesHtml = '';
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
+                    let cleanExcerpt = "";
+                    if(data.isi) {
+                        // Bersihkan tag HTML untuk tampilan depan
+                        cleanExcerpt = data.isi.replace(/<[^>]*>?/gm, ' ');
+                        cleanExcerpt = cleanExcerpt.substring(0, 150) + "...";
+                    }
+
                     articlesHtml += `
                         <article class="blog-card">
-                            <div class="blog-img" style="background-image: url('${data.gambar}');"></div>
+                            <div class="blog-img-container">
+                                <img src="${data.gambar}" class="blog-img-tag" onload="checkImageOrientation(this)">
+                            </div>
                             <div class="blog-info">
                                 <div class="blog-meta">${data.kategori} • ${data.tanggal}</div>
                                 <h3 class="blog-title">${data.judul}</h3>
-                                <p class="blog-excerpt">${data.isi}</p>
+                                <p class="blog-excerpt">${cleanExcerpt}</p>
                                 <a href="article.html?id=${doc.id}" class="read-more">Baca Selengkapnya &rarr;</a>
                             </div>
                         </article>
