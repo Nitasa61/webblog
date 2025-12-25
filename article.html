@@ -14,25 +14,59 @@
         .btn-back { float: right; text-decoration: none; color: #666; font-size: 0.9rem; }
 
         .article-container { max-width: 800px; margin: 3rem auto; padding: 0 20px; background: white; padding: 40px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        
         .article-header { margin-bottom: 2rem; text-align: center; }
         .badge { background: var(--primary-color); color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; text-transform: uppercase; }
         .date { color: #888; font-size: 0.9rem; margin-top: 10px; display: block; }
         h1 { font-size: 2.5rem; margin: 15px 0; line-height: 1.3; overflow-wrap: break-word; }
 
-        .article-img { width: 100%; height: auto; border-radius: 10px; margin-bottom: 2rem; display: block; }
-        .is-portrait-header { max-height: 500px; object-fit: cover; object-position: top center !important; width: 100%; }
-        
-        .article-content { line-height: 1.8; font-size: 1.1rem; color: #444; overflow-wrap: break-word; width: 100%; }
-        .article-content ul, .article-content ol { margin-left: 20px; margin-bottom: 15px; }
-        .article-content p { margin-bottom: 15px; }
-        .article-content img { max-width: 100%; height: auto; }
+        /* === PERBAIKAN CSS GAMBAR DI SINI === */
+        /* 1. Style Dasar: Landscape full (tinggi otomatis) */
+        .article-img { 
+            width: 100%; 
+            height: auto; /* Biarkan tinggi menyesuaikan agar landscape tidak gepeng/terpotong */
+            border-radius: 10px; 
+            margin-bottom: 2rem;
+            display: block;
+        }
 
-        .btn-home-phys { display: inline-block; margin-top: 40px; padding: 12px 30px; background-color: var(--secondary-color); color: white; text-decoration: none; border-radius: 50px; font-weight: 600; transition: 0.3s; box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3); }
-        .btn-home-phys:hover { background-color: var(--primary-color); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(46, 204, 113, 0.4); }
+        /* 2. Style Khusus Portrait: Batasi tinggi agar tidak terlalu panjang ke bawah, lalu crop atas */
+        .force-portrait-crop-single {
+            max-height: 500px; /* Batas tinggi maksimal untuk portrait di halaman baca */
+            object-fit: cover;
+            object-position: top center; /* Fokus crop di atas */
+            width: 100%;
+        }
+        /* ===================================== */
+        
+        .article-content { 
+            line-height: 1.8; font-size: 1.1rem; color: #444; 
+            white-space: pre-wrap; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; width: 100%;
+        }
+
+        .btn-home-phys {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 12px 30px;
+            background-color: var(--secondary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3);
+        }
+        .btn-home-phys:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(46, 204, 113, 0.4);
+        }
+        
         footer { text-align: center; padding: 2rem; color: #888; font-size: 0.9rem; margin-top: 3rem; border-top: 1px solid #ddd; }
     </style>
 </head>
 <body>
+
     <div class="navbar">
         <a href="index.html" class="logo">F.A HydroFarm Blog</a>
         <a href="index.html" class="btn-back">&larr; Kembali ke Daftar Artikel</a>
@@ -40,6 +74,7 @@
 
     <div class="article-container">
         <div id="loading" style="text-align: center;">Sedang memuat artikel...</div>
+        
         <div id="content" style="display: none;">
             <div class="article-header">
                 <span class="badge" id="artCategory">Kategori</span>
@@ -47,17 +82,28 @@
                 <h1 id="artTitle">Judul Artikel</h1>
             </div>
             
-            <img id="artImage" src="" alt="Gambar Artikel" class="article-img" onload="checkHeaderOrientation(this)">
-            <div class="article-content" id="artBody"></div>
-            <div style="text-align: center;"><a href="index.html" class="btn-home-phys">&larr; Kembali ke Beranda Blog</a></div>
+            <img id="artImage" src="" alt="Gambar Artikel" class="article-img" onload="adjustSingleImage(this)">
+            
+            <div class="article-content" id="artBody">
+                </div>
+
+            <div style="text-align: center;">
+                <a href="index.html" class="btn-home-phys">
+                    &larr; Kembali ke Beranda Blog
+                </a>
+            </div>
         </div>
     </div>
 
     <footer>&copy; 2025 F.A HydroFarm</footer>
 
     <script>
-        function checkHeaderOrientation(img) {
-            if (img.naturalHeight > img.naturalWidth) img.classList.add('is-portrait-header');
+        function adjustSingleImage(imgElement) {
+            // Jika portrait (tinggi > lebar)
+            if (imgElement.naturalHeight > imgElement.naturalWidth) {
+                // Tambahkan kelas untuk membatasi tinggi dan crop atas
+                imgElement.classList.add('force-portrait-crop-single');
+            }
         }
     </script>
 
@@ -82,32 +128,38 @@
             const params = new URLSearchParams(window.location.search);
             const id = params.get('id');
 
-            if (!id) { document.getElementById('loading').innerText = "Artikel tidak ditemukan (ID Kosong)."; return; }
+            if (!id) {
+                document.getElementById('loading').innerText = "Artikel tidak ditemukan (ID Kosong).";
+                return;
+            }
 
-            try {
-                const docRef = doc(db, "articles", id);
-                const docSnap = await getDoc(docRef);
+            const docRef = doc(db, "articles", id);
+            const docSnap = await getDoc(docRef);
 
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    document.getElementById('artCategory').innerText = data.kategori || "Umum";
-                    document.getElementById('artDate').innerText = data.tanggal || "-";
-                    document.getElementById('artTitle').innerText = data.judul || "Tanpa Judul";
-                    
-                    const imgEl = document.getElementById('artImage');
-                    if(data.gambar) { imgEl.src = data.gambar; imgEl.alt = data.judul; } 
-                    else { imgEl.style.display = 'none'; }
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+                
+                document.getElementById('artCategory').innerText = data.kategori;
+                document.getElementById('artDate').innerText = data.tanggal;
+                document.getElementById('artTitle').innerText = data.judul;
+                
+                // Set src gambar (ini akan memicu event onload di atas)
+                const imgEl = document.getElementById('artImage');
+                imgEl.src = data.gambar;
+                imgEl.alt = data.judul;
 
-                    // MENAMPILKAN ISI ARTIKEL HTML (PENTING!)
-                    document.getElementById('artBody').innerHTML = data.isi || "<p>Konten kosong atau sedang diperbaiki.</p>";
+                document.getElementById('artBody').innerText = data.isi;
 
-                    document.getElementById('loading').style.display = 'none';
-                    document.getElementById('content').style.display = 'block';
-                    document.title = (data.judul || "Artikel") + " - F.A HydroFarm";
-                } else { document.getElementById('loading').innerText = "Artikel tidak ditemukan."; }
-            } catch (err) { console.log(err); }
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('content').style.display = 'block';
+                document.title = data.judul + " - F.A HydroFarm";
+            } else {
+                document.getElementById('loading').innerText = "Artikel tidak ditemukan di database.";
+            }
         }
+
         loadSingleArticle();
     </script>
+
 </body>
 </html>
