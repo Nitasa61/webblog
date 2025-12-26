@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>F.A HydroFarm Blog - Edukasi Hidroponik</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --primary-color: #2ecc71; --secondary-color: #27ae60; --text-dark: #333; --text-light: #666; --bg-light: #f9fbf9; --white: #ffffff; --accent-color: #f1c40f; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -19,15 +20,7 @@
 
         .hero { 
             background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'); 
-            background-size: cover; 
-            background-position: center; 
-            height: 450px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            text-align: center; 
-            color: var(--white); 
-            padding: 0 1rem; 
+            background-size: cover; background-position: center; height: 450px; display: flex; align-items: center; justify-content: center; text-align: center; color: var(--white); padding: 0 1rem; 
         }
         .hero-content h1 { font-size: 3rem; margin-bottom: 1rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
         .hero-content p { font-size: 1.2rem; max-width: 700px; margin: 0 auto; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
@@ -35,6 +28,26 @@
         .container { max-width: 1200px; margin: 3rem auto; padding: 0 2rem; display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; }
         .section-title { margin-bottom: 2rem; position: relative; padding-bottom: 10px; }
         .section-title::after { content: ''; position: absolute; left: 0; bottom: 0; width: 50px; height: 4px; background-color: var(--primary-color); border-radius: 2px; }
+
+        /* SEARCH BAR STYLE */
+        .search-container {
+            display: flex; justify-content: center; margin-bottom: 2rem;
+        }
+        .search-box {
+            position: relative; width: 100%; max-width: 500px;
+        }
+        .search-box input {
+            width: 100%; padding: 12px 20px; padding-right: 50px;
+            border: 2px solid #eee; border-radius: 50px; outline: none; transition: 0.3s;
+            font-family: inherit;
+        }
+        .search-box input:focus { border-color: var(--primary-color); box-shadow: 0 5px 15px rgba(46, 204, 113, 0.1); }
+        .search-box button {
+            position: absolute; right: 5px; top: 50%; transform: translateY(-50%);
+            background: var(--primary-color); color: white; border: none;
+            width: 40px; height: 40px; border-radius: 50%; cursor: pointer; transition: 0.3s;
+        }
+        .search-box button:hover { background: var(--secondary-color); }
 
         .blog-card { background: var(--white); border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 2rem; display: flex; flex-direction: column; transition: transform 0.3s; }
         .blog-card:hover { transform: translateY(-5px); }
@@ -55,20 +68,26 @@
 
         .read-more { text-decoration: none; color: var(--secondary-color); font-weight: 700; display: inline-flex; align-items: center; gap: 5px; cursor: pointer; }
         
+        /* PAGINATION STYLE */
+        .pagination { display: flex; justify-content: center; gap: 8px; margin-top: 2rem; }
+        .page-btn {
+            width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+            border: 1px solid #eee; background: white; border-radius: 5px; cursor: pointer; 
+            color: var(--text-dark); font-weight: 600; transition: 0.2s;
+        }
+        .page-btn:hover { background-color: #f0f0f0; }
+        .page-btn.active { background-color: var(--primary-color); color: white; border-color: var(--primary-color); }
+        .page-btn.nav-btn { width: auto; padding: 0 15px; }
+        .page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
         .sidebar-widget { background: var(--white); padding: 1.5rem; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 2rem; }
         .widget-title { font-size: 1.2rem; margin-bottom: 1rem; border-bottom: 2px solid #eee; padding-bottom: 0.5rem; }
-        
         .category-list { list-style: none; } 
         .category-list li { margin-bottom: 0.8rem; border-bottom: 1px dotted #eee; padding-bottom: 5px; } 
-        
-        .category-list a { 
-            text-decoration: none; color: var(--text-light); display: flex; justify-content: space-between; font-weight: 500; cursor: pointer; 
-        }
+        .category-list a { text-decoration: none; color: var(--text-light); display: flex; justify-content: space-between; font-weight: 500; cursor: pointer; }
         .category-list a:hover, .category-list a.active-cat { color: var(--primary-color); font-weight: 700; }
-
         .notification-box { background-color: #e8f8f5; border-left: 4px solid var(--primary-color); padding: 1rem; font-size: 0.9rem; color: var(--text-dark); margin-bottom: 10px; border-radius: 0 5px 5px 0;}
         .notification-box.promo { background-color: #fcf3cf; border-color: var(--accent-color); }
-        
         .empty-state { text-align: center; padding: 40px; background: white; border-radius: 10px; color: #777; }
         
         footer { background-color: var(--text-dark); color: var(--white); padding: 3rem 2rem; text-align: center; }
@@ -99,9 +118,23 @@
 
     <main class="container">
         
-        <section class="blog-grid" id="blogContainer">
+        <section class="blog-grid">
+            
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Cari judul artikel..." onkeyup="handleSearch()">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+
             <h2 class="section-title" id="pageTitle">Artikel Terbaru</h2>
-            <div style="text-align: center; color: #888;">Sedang memuat artikel...</div>
+            
+            <div id="blogContainer" style="min-height: 200px;">
+                <div style="text-align: center; color: #888;">Sedang memuat artikel...</div>
+            </div>
+
+            <div class="pagination" id="paginationContainer"></div>
+
         </section>
 
         <aside>
@@ -170,12 +203,21 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        // VARIABEL GLOBAL UNTUK PAGINATION & SEARCH
+        let allArticlesData = [];
+        let currentPage = 1;
+        const itemsPerPage = 5;
+
+        // Load awal
         window.loadArticles = async (filter = 'Semua') => {
             const container = document.getElementById('blogContainer');
             const pageTitle = document.getElementById('pageTitle');
             
-            container.innerHTML = `<h2 class="section-title">${filter === 'Semua' ? 'Artikel Terbaru' : 'Kategori: ' + filter}</h2>
-                                   <div style="text-align: center; padding: 20px;">⏳ Sedang mengambil data...</div>`;
+            // Ubah Judul
+            if (filter !== 'Semua') pageTitle.innerText = "Kategori: " + filter;
+            else pageTitle.innerText = "Artikel Terbaru";
+
+            container.innerHTML = `<div style="text-align: center; padding: 20px;">⏳ Sedang mengambil data...</div>`;
 
             try {
                 let q;
@@ -186,45 +228,18 @@
                 }
 
                 const querySnapshot = await getDocs(q);
-
-                if (querySnapshot.empty) {
-                    container.innerHTML = `
-                        <h2 class="section-title">${filter === 'Semua' ? 'Artikel Terbaru' : 'Kategori: ' + filter}</h2>
-                        <div class="empty-state">
-                            <h3>Belum ada artikel</h3>
-                            <p>Tidak ditemukan artikel untuk kategori <strong>"${filter}"</strong> saat ini.</p>
-                        </div>
-                    `;
-                    return;
-                }
-
-                let articlesHtml = '';
-                querySnapshot.forEach((doc) => {
-                    const data = doc.data();
-                    let cleanExcerpt = "";
-                    if(data.isi) {
-                        // Bersihkan tag HTML untuk tampilan depan
-                        cleanExcerpt = data.isi.replace(/<[^>]*>?/gm, ' ');
-                        cleanExcerpt = cleanExcerpt.substring(0, 150) + "...";
-                    }
-
-                    articlesHtml += `
-                        <article class="blog-card">
-                            <div class="blog-img-container">
-                                <img src="${data.gambar}" class="blog-img-tag" onload="checkImageOrientation(this)">
-                            </div>
-                            <div class="blog-info">
-                                <div class="blog-meta">${data.kategori} • ${data.tanggal}</div>
-                                <h3 class="blog-title">${data.judul}</h3>
-                                <p class="blog-excerpt">${cleanExcerpt}</p>
-                                <a href="article.html?id=${doc.id}" class="read-more">Baca Selengkapnya &rarr;</a>
-                            </div>
-                        </article>
-                    `;
-                });
                 
-                const displayTitle = filter === 'Semua' ? 'Artikel Terbaru' : 'Kategori: ' + filter;
-                container.innerHTML = `<h2 class="section-title">${displayTitle}</h2>` + articlesHtml;
+                // Simpan data mentah ke variabel global
+                allArticlesData = [];
+                querySnapshot.forEach(doc => {
+                    allArticlesData.push({ id: doc.id, ...doc.data() });
+                });
+
+                // Reset ke halaman 1 setiap ganti kategori
+                currentPage = 1;
+                
+                // Render dengan filter & pagination
+                renderArticles();
 
             } catch (error) {
                 console.error("Error loading articles:", error);
@@ -232,9 +247,119 @@
             }
         }
 
+        // Fungsi Render Utama (Menangani Search + Pagination)
+        window.renderArticles = () => {
+            const container = document.getElementById('blogContainer');
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+
+            // 1. FILTER PENCARIAN
+            const filteredData = allArticlesData.filter(art => 
+                art.judul.toLowerCase().includes(searchInput)
+            );
+
+            // Cek kosong
+            if (filteredData.length === 0) {
+                container.innerHTML = `<div class="empty-state"><h3>Artikel tidak ditemukan</h3><p>Coba kata kunci lain atau kategori berbeda.</p></div>`;
+                document.getElementById('paginationContainer').innerHTML = ''; // Hapus pagination
+                return;
+            }
+
+            // 2. LOGIKA PAGINATION
+            const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+            if (currentPage > totalPages) currentPage = totalPages;
+            
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const paginatedItems = filteredData.slice(start, end);
+
+            // 3. RENDER HTML
+            let articlesHtml = '';
+            paginatedItems.forEach(data => {
+                // Bersihkan HTML tag untuk preview
+                const rawContent = data.isi || "";
+                const plainText = rawContent.replace(/<[^>]*>?/gm, ' '); 
+                const excerpt = plainText.length > 0 ? plainText.substring(0, 150) + "..." : "Klik Baca Selengkapnya...";
+
+                articlesHtml += `
+                    <article class="blog-card">
+                        <div class="blog-img-container">
+                            <img src="${data.gambar}" class="blog-img-tag" onload="checkImageOrientation(this)">
+                        </div>
+                        <div class="blog-info">
+                            <div class="blog-meta">${data.kategori} • ${data.tanggal}</div>
+                            <h3 class="blog-title">${data.judul}</h3>
+                            <p class="blog-excerpt">${excerpt}</p>
+                            <a href="article.html?id=${data.id}" class="read-more">Baca Selengkapnya &rarr;</a>
+                        </div>
+                    </article>
+                `;
+            });
+            container.innerHTML = articlesHtml;
+
+            // 4. RENDER TOMBOL PAGINATION
+            renderPaginationControls(totalPages);
+        }
+
+        function renderPaginationControls(totalPages) {
+            const paginationContainer = document.getElementById('paginationContainer');
+            paginationContainer.innerHTML = '';
+
+            if (totalPages <= 1) return; // Tidak perlu pagination jika cuma 1 halaman
+
+            // Tombol Prev
+            const prevBtn = document.createElement('button');
+            prevBtn.className = 'page-btn nav-btn';
+            prevBtn.innerHTML = '&larr;';
+            prevBtn.disabled = currentPage === 1;
+            prevBtn.onclick = () => { currentPage--; renderArticles(); window.scrollTo(0,0); };
+            paginationContainer.appendChild(prevBtn);
+
+            // Logika Window 3 Halaman (Misal: 1, 2, 3 atau 2, 3, 4)
+            let startPage, endPage;
+            if (totalPages <= 3) {
+                startPage = 1;
+                endPage = totalPages;
+            } else {
+                if (currentPage <= 2) {
+                    startPage = 1;
+                    endPage = 3;
+                } else if (currentPage + 1 >= totalPages) {
+                    startPage = totalPages - 2;
+                    endPage = totalPages;
+                } else {
+                    startPage = currentPage - 1;
+                    endPage = currentPage + 1;
+                }
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                const btn = document.createElement('button');
+                btn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+                btn.innerText = i;
+                btn.onclick = () => { currentPage = i; renderArticles(); window.scrollTo(0,0); };
+                paginationContainer.appendChild(btn);
+            }
+
+            // Tombol Next
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'page-btn nav-btn';
+            nextBtn.innerHTML = '&rarr;';
+            nextBtn.disabled = currentPage === totalPages;
+            nextBtn.onclick = () => { currentPage++; renderArticles(); window.scrollTo(0,0); };
+            paginationContainer.appendChild(nextBtn);
+        }
+
+        // Event Listener Search
+        window.handleSearch = () => {
+            currentPage = 1; // Reset ke hal 1 saat mengetik
+            renderArticles();
+        }
+
         window.filterKategori = function(kategori, element) {
             document.querySelectorAll('.category-list a').forEach(el => el.classList.remove('active-cat'));
             if(element) element.classList.add('active-cat');
+            // Kosongkan search box saat ganti kategori
+            document.getElementById('searchInput').value = '';
             window.loadArticles(kategori);
         }
 
@@ -244,19 +369,17 @@
                 const q = query(collection(db, "notifications"), orderBy("createdAt", "desc"));
                 const querySnapshot = await getDocs(q);
                 container.innerHTML = ''; 
-                if (querySnapshot.empty) {
-                    container.innerHTML = '<p style="font-size:0.9rem; color:#999;">Tidak ada info baru.</p>';
-                    return;
-                }
+                if (querySnapshot.empty) { container.innerHTML = '<p style="font-size:0.9rem; color:#999;">Tidak ada info baru.</p>'; return; }
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
                     const typeClass = data.type === 'promo' ? 'promo' : '';
                     const content = data.content ? data.content.replace(/\n/g, '<br>') : '';
                     container.innerHTML += `<div class="notification-box ${typeClass}">${content}</div>`;
                 });
-            } catch (e) { console.log("Error notif:", e); }
+            } catch (e) { }
         }
 
+        // Init Load
         window.loadArticles('Semua');
         loadNotifications();
     </script>
