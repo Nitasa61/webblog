@@ -189,6 +189,21 @@
             if (img.naturalHeight > img.naturalWidth) img.classList.add('is-portrait');
             else img.classList.remove('is-portrait');
         }
+
+        // Panggil Iklan Interstitial (Sesuai Gambar)
+        // Pastikan tag.min.js di <head> sudah termuat
+        if (typeof show_10377136 === 'function') {
+            show_10377136({
+                type: 'inApp',
+                inAppSettings: {
+                    frequency: 2,
+                    capping: 0.1,
+                    interval: 30,
+                    timeout: 5,
+                    everyPage: false
+                }
+            });
+        }
     </script>
 
     <script type="module">
